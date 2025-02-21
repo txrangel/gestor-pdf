@@ -53,12 +53,10 @@ class ProfilesRelationManager extends RelationManager
                 ]),            
             ])
             ->actions([
-                Tables\Actions\DetachAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DetachBulkAction::make(),
             ]);
     }
 }
