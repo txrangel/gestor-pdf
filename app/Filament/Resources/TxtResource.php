@@ -20,6 +20,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class TxtResource extends Resource
 {
@@ -149,7 +150,29 @@ class TxtResource extends Resource
                     ->hidden(function (Txt $record) {
                         return $record->extension !== '.zip';
                     }),
-                //Tables\Actions\DeleteAction::make(),
+                Action::make('download')
+                    ->label('Download')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(function (Txt $record) {
+                        if ($record->extension != ".txt") {
+                            $zipFolderPath = storage_path('app/public/txts/' . basename($record->file_path, '.zip'));
+                            $tempZipPath = storage_path('app/public/txts/' . basename($record->file_path, '.zip') . '_download.zip');
+                            
+                            $zip = new ZipArchive;
+                            if ($zip->open($tempZipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+                                $files = scandir($zipFolderPath);
+                                foreach ($files as $file) {
+                                    if ($file !== '.' && $file !== '..') {
+                                        $zip->addFile($zipFolderPath . '/' . $file, $file);
+                                    }
+                                }
+                                $zip->close();
+                            }
+                            
+                            return response()->download($tempZipPath)->deleteFileAfterSend(true);
+                        }
+                        return response()->download(storage_path('app/public/' . $record->file_path));
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

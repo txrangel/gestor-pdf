@@ -50,7 +50,10 @@ class PdfResource extends Resource
             ])      
             ->actions([
                 Tables\Actions\EditAction::make(),
-                //Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Download')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(fn ($record) => response()->download(storage_path('app/public/' . $record->file_path))),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
