@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Clusters\Files;
 use App\Filament\Resources\RequestResource\Pages;
 use App\Filament\Resources\RequestResource\RelationManagers;
 use App\Models\Request;
@@ -13,13 +14,15 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Pages\SubNavigationPosition;
 
 class RequestResource extends Resource
 {
     protected static ?string $model = Request::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
-
+    protected static ?string $cluster = Files::class;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
     public static function form(Form $form): Form
     {
         return $form

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Clusters\Files;
 use App\Filament\Resources\PdfResource\Pages;
 use App\Filament\Resources\PdfResource\RelationManagers;
 use App\Models\Pdf;
@@ -13,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Pages\SubNavigationPosition;
 
 class PdfResource extends Resource
 {
@@ -20,6 +22,8 @@ class PdfResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document';
 
+    protected static ?string $cluster = Files::class;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
     public static function form(Form $form): Form
     {
         return $form
@@ -46,7 +50,7 @@ class PdfResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                //
+                
             ])      
             ->actions([
                 Tables\Actions\EditAction::make(),

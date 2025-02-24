@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Clusters\Files;
 use App\Filament\Resources\TxtResource\Pages;
 use App\Filament\Resources\TxtResource\RelationManagers;
 use App\Models\Txt;
@@ -21,13 +22,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use Filament\Pages\SubNavigationPosition;
 
 class TxtResource extends Resource
 {
     protected static ?string $model = Txt::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
+    protected static ?string $cluster = Files::class;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
     public static function form(Form $form): Form
     {
         return $form
