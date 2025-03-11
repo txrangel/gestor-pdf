@@ -8,7 +8,8 @@ class PdfToTxtService
 {
     public function convertPdfToTxt($pdfFile)
     {
-        $url = 'http://82.25.76.49:5001/processar-pdf';
+        $apiUrl = config('services.api.url');
+        $url = $apiUrl . '/processar-pdf';
 
         try {
             $response = Http::attach(
