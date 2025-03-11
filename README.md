@@ -12,8 +12,8 @@
 
 #### Clone o repositório:
 ```bash
-git clone https://github.com/txrangel/base-projetos.git
-cd base-projetos
+git clone https://github.com/txrangel/gestor-pdf.git
+cd gestor-pdf
 ```
 
 #### Copiar Env:
